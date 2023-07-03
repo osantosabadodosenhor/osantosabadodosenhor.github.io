@@ -1,0 +1,13 @@
+html{font-family:"Arial";}
+h1,h2,p{line-height:1.5em;text-align:justify;}th{width:70px;height:30px;font-size:18px;}
+p{font-size:18px;}
+#sl{position:fixed;top:0px;left:0px;width:30px;overflow:hidden;}
+#c{position:fixed;top:0px;right:0px;width:60px;overflow:hidden;}
+#slc2{transform:translateX(-60px);}
+.ta{color:blue;}
+.tp{color:red;}
+.tj{color:green;}
+.la{background:blue;color:white;}
+.lp{background:red;color:white;}
+.lj{background:green;color:white;}
+#conteudo{max-width:810px;margin:auto;}
