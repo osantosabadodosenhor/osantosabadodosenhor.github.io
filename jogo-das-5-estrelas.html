@@ -43,7 +43,8 @@ window.scrollTo(0, document.body.scrollHeight);
 }
 inicio();
 function continuar(){
-document.getElementById("resposta").innerHTML="senha:<input type = number style='max-width:100px;width:100px;' id=s autofocus></input><button onclick=senha() style='font-size:25px;'>Ok</button>";
+ApagaTeclado();
+document.getElementById("resposta").innerHTML="senha:<input type = number style='max-width:100px;width:100px;' id=s autofocus></input><button onclick=senha() style='font-size:25px;'>Ok</button><br><br><button onclick=inicio() style='font-size:25px;'>Voltar</button>";
 }
 
 function senha(){
@@ -51,6 +52,7 @@ for(i=0;i<respostas.length;i++)
 if(parseInt(document.getElementById("s").value)==senhas[i]){
 DigitouSenha=1;
 palavra=i;pista=parseInt(palavra/5);
+MostraTeclado();
 ProximaPalavra();
 break;
 }
@@ -69,12 +71,10 @@ document.getElementById(alfabeto[i]).style.backgroundColor="white";
 
 }
 function ApagaTeclado(){
-for(i=0;i<alfabeto.length;i++)
-document.getElementById(alfabeto[i]).style.opacity=0;
+document.getElementById("teclado").style.opacity=0;
 }
 function MostraTeclado(){
-for(i=0;i<alfabeto.length;i++)
-document.getElementById(alfabeto[i]).style.opacity=1;
+document.getElementById("teclado").style.opacity=1;
 }
 function APistaMudou(){//chama a atenção para a pista quando ela mudar
 
