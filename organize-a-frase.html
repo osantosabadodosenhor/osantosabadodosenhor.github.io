@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Organize a frase</title><link rel="icon" type="image/png" href="img/f.png"><meta http-equiv="content-language" content="pt-br"><meta name="description" content="Jogo bíblico cujo objetivo é organizar os quadrinhos azuis, verdes e vermelhos de modo que as palavras neles contidas formem corretamente a frase escrita acima deles."><link rel="stylesheet" href="css/e.css">
+<style>
+body{
+margin:0px;
+}
+th{
+max-width:100px;min-width:100px;
+height:100px;
+font-size:20px;
+word-wrap:break-word;
+}
+td {
+width:100px;
+height:100px;
+}
+p{text-align:center;}
+</style>
+
+</HEAD><BODY><div id="sl"><img id="slc" src="img/slc.png"></div><div id="c"><a href="index.html"><img src="img/slc.png" id="slc2"></a></div><br><div id="conteudo"><h2><font class="la">S</font><font style="color:blue;background:#00FF00;">S</font><font style="color:#00FF00;background:blue;">S</font> - O Santo Sábado do Senhor</h2><h1 class="tj">Organize a frase</h1>
+<center><div id=jogo></div></center>
+<script type="text/javascript" src="js/s.js"></script>
+<script>
+//
+/*
+
+O Senhor é o meu pastor, nada me faltará
+Deus converte o deserto em lago e a terra seca em fontes
+A memória do justo é abençoada; mas o nome dos ímpios apodrecerá
+O justo nunca será abalado; mas os ímpios não habitarão a terra
+*/
+var frases=[["Jesus","é","o","caminho,","a","verdade","e a","vida"],["Bem","aventurados","os que","ouvem","a palavra","de Deus,","e a","observam"],["Se","Cristo","vos","libertar,","verdadei-","ramente","sereis","livres"],["Quem é","correto","nunca","fracassará","e será","lembrado","para","sempre"],["Felizes são","aqueles","que não","se deixam","levar","pelos","conselhos","dos maus"],["O ódio","provoca","dissensão,","mas o ","amor","cobre","todos os","pecados"],["Quem ","semeia","a","injus-","tiça","colherá","a","desgraça"]];
+var FrasesEmbaralhadas=[["Jesus","é","o","vida","e a","a","caminho,","verdade"],["Bem","os que","a palavra","observam","aventurados","de Deus,","ouvem","e a"],["Se","vos","verdadei-","libertar,","ramente","Cristo","livres","sereis"],["correto","sempre","fracassará","e será","para","lembrado","Quem é","nunca"],["levar","Felizes são","que não","aqueles","dos maus","conselhos","se deixam","pelos"],["pecados","mas o ","cobre","amor","O ódio","dissensão,","provoca","todos os"],["injus-","tiça","colherá","a","semeia","a","Quem ","desgraça"]];
+var senhas=[1650,7204,6137,2074,4163,6502,3705];
+var cores=[["b","r","g","r","b","r","b","g"],["b","g","r","r","r","g","b","b"],["b","g","r","b","g","r","r","b"],["r","r","b","r","b","g","b","g"],["r","b","g","r","r","b","b","g"],["r","b","g","r","b","g","r","b"],["b","r","g","b","r","g","b","r"]];
+var cor;
+var JaAcertou=0, DigitouSenha=0;
+var frase="", FraseEmbaralhada="", i,f="", n=0, j, aux;
+//frase: frase atual. É o conjunto de arrays que compõem a frase.
+//Não possui espaços, portanto é ilegível.
+//FraseEmbaralhada: É a frase atual, embaralhada. Também não
+//possui espaços.
+//f: frase legível (com espaços).
+//n: determina qual é a frase da vez.
+function inicio(){
+document.getElementById("jogo").innerHTML="<button style='font-size:25px;' onclick=jogar()>Começar</button><br/><button style='font-size:25px;' onclick=continuar()>Continuar jogo anterior</button><br/><button style='font-size:25px;' onclick=instrucoes()>Instruções</button>";
+}
+inicio();
+function continuar(){
+document.getElementById("jogo").innerHTML="<p>senha:<input type = number style='font-size:25px;width:100px;' id=s autofocus></input><button onclick=senha() style='font-size:25px;'>Ok</button><br><br><button onclick=inicio() style='font-size:25px;'>Voltar</button></p>";
+}
+function senha(){
+for(i=0;i<frases.length;i++)
+if(parseInt(document.getElementById("s").value)==senhas[i]){
+DigitouSenha=1;
+n=i;
+jogar();
+break;
+}
+if(i==frases.length)alert("Senha incorreta");
+}
+function instrucoes(){
+document.getElementById("jogo").innerHTML="<p>Que a paz esteja com você!</p><p>O objetivo do jogo é organizar os quadrinhos azuis, verdes e vermelhos de modo que as palavras neles contidas formem corretamente a frase escrita acima deles. Para mover um quadrinho, basta clicar nele, e se houver um espaço vazio próximo a ele, esse quadrinho ocupará esse espaço vazio, deixando seu lugar vago. Eles não se movem na diagonal, apenas verticalmente e horizontalmente. Depois que você organizar a frase, o próximo nível será desbloqueado, e será mostrada uma senha, para que você, da próxima vez que jogar, não precise começar desde o início, mas sim de onde parou. Se você já tiver jogado alguma vez, clique em Continuar jogo anterior e digite a última senha que você viu.</p><p>Que Deus abençoe você! </p><p><button onclick=inicio() style='font-size:25px;'>Voltar</button></p>"
+}
+function parabens(){
+document.getElementById("jogo").innerHTML="<center><table style='border-collapse:collapse;'><tr><td style='background:blue;' id=c1></td><td style='background:red;' id=c2></td><td style='background:green;' id=c3></td><td style='background:blue;' id=c4></td><td style='background:red;' id=c5></td></tr><tr><td style='background:green;' id=c12></td><td colspan=3><marquee>Parabéns!</marquee></td><td style='background:green;' id=c6></td></tr><tr><td style='background:red;' id=c11></td><td style='background:blue;' id=c10></td><td style='background:green;' id=c9></td><td style='background:red;' id=c8></td><td style='background:blue;' id=c7></td></tr></table></center>";
+}
+function animacao(){
+aux=document.getElementById("c12").style.backgroundColor;
+
+for(i=12;i>1;i--)document.getElementById("c"+i).style.backgroundColor=
+
+document.getElementById("c"+(i-1)).style.backgroundColor;
+document.getElementById("c1").style.backgroundColor=aux;
+
+}
+
+
+function jogar(){
+if(n==frases.length){
+parabens();j=setInterval(animacao,1000);
+}
+else{
+JaAcertou=0;
+frase=frases[n];
+for(i=0;i<frase.length;i++)
+f+=frase[i]+" ";
+f=f.replace("- ","");
+
+cor=cores[n];
+for(i=0;i<8;i++){
+if(cor[i]=="b")cor[i]="blue";
+if(cor[i]=="r")cor[i]="red";
+if(cor[i]=="g")cor[i]="green";
+}
+FraseEmbaralhada=FrasesEmbaralhadas[n];
+document.getElementById("jogo").innerHTML="<h3 id=frase style='text-align:center'>"+f+"</h3><br><table><tr><th style='background:"+cor[0]+";color:white;' onclick=s(1) id=1>"+FraseEmbaralhada[0]+"</th><th style='background:"+cor[1]+";color:white;' onclick=s(2) id=2>"+FraseEmbaralhada[1]+"</th><th style='background:"+cor[2]+";color:white;' onclick=s(3) id=3>"+FraseEmbaralhada[2]+"</th></tr><tr><th style='background:"+cor[3]+";color:white;' onclick=s(4) id=4>"+FraseEmbaralhada[3]+"</th><th style='background:"+cor[4]+";color:white;' onclick=s(5) id=5>"+FraseEmbaralhada[4]+"</th><th style='background:"+cor[5]+";color:white;' onclick=s(6) id=6>"+FraseEmbaralhada[5]+"</th></tr><tr><th style='background:"+cor[6]+";color:white;' onclick=s(7) id=7>"+FraseEmbaralhada[6]+"</th><th style='background:"+cor[7]+";color:white;' onclick=s(8) id=8>"+FraseEmbaralhada[7]+"</th><th style='color:white;' onclick=s(9) id=9></th></tr></table>";
+window.scrollTo(0, document.body.scrollHeight);
+}
+}
+
+function GetCasa(c){//obtém o conteúdo de uma casa
+return document.getElementById(c).innerHTML;
+}
+function SetCasa(c,texto){//coloca conteúdo em uma casa
+document.getElementById(c).innerHTML=texto;
+}
+function TrocaDeLugar(c1,c2){//c1 deve ser a ocupada, e c2 a vazia
+SetCasa(c2,GetCasa(c1));//troca os conteúdos
+SetCasa(c1,"");
+
+document.getElementById(c2).style.backgroundColor=document.getElementById(c1).style.backgroundColor;
+document.getElementById(c1).style.backgroundColor=document.body.style.backgroundColor;
+}
+
+function s(c){
+if(c==1){
+if(GetCasa("2")=="")TrocaDeLugar("1","2");
+if(GetCasa("4")=="")TrocaDeLugar("1","4");
+}
+if(c==2){
+if(GetCasa("1")=="")TrocaDeLugar("2","1");
+if(GetCasa("3")=="")TrocaDeLugar("2","3");
+if(GetCasa("5")=="")TrocaDeLugar("2","5");
+}
+if(c==3){
+if(GetCasa("2")=="")TrocaDeLugar("3","2");
+if(GetCasa("6")=="")TrocaDeLugar("3","6");
+}
+if(c==4){
+if(GetCasa("1")=="")TrocaDeLugar("4","1");
+if(GetCasa("5")=="")TrocaDeLugar("4","5");
+if(GetCasa("7")=="")TrocaDeLugar("4","7");
+}
+if(c==5){
+if(GetCasa("2")=="")TrocaDeLugar("5","2");
+if(GetCasa("4")=="")TrocaDeLugar("5","4");
+if(GetCasa("6")=="")TrocaDeLugar("5","6");
+if(GetCasa("8")=="")TrocaDeLugar("5","8");
+}
+if(c==6){
+if(GetCasa("3")=="")TrocaDeLugar("6","3");
+if(GetCasa("5")=="")TrocaDeLugar("6","5");
+if(GetCasa("9")=="")TrocaDeLugar("6","9");
+}
+if(c==7){
+if(GetCasa("4")=="")TrocaDeLugar("7","4");
+if(GetCasa("8")=="")TrocaDeLugar("7","8");
+}
+if(c==8){
+if(GetCasa("5")=="")TrocaDeLugar("8","5");
+if(GetCasa("7")=="")TrocaDeLugar("8","7");
+if(GetCasa("9")=="")TrocaDeLugar("8","9");
+}
+if(c==9){
+if(GetCasa("6")=="")TrocaDeLugar("9","6");
+if(GetCasa("8")=="")TrocaDeLugar("9","8");
+}
+if(GetCasa("1")==frase[0]&&GetCasa("2")==frase[1]&&GetCasa("3")==frase[2]&&GetCasa("4")==frase[3]&&GetCasa("5")==frase[4]&&GetCasa("6")==frase[5]&&GetCasa("7")==frase[6]&&GetCasa("8")==frase[7]&&JaAcertou==0){//acertou
+alert("Acertou! Senha: "+senhas[n+1]);
+JaAcertou=1;
+
+n++;f="";
+document.getElementById("jogo").innerHTML+="<br><button style='font-size:25px' onclick=jogar()>Próximo nível</button>";
+window.scrollTo(0, document.body.scrollHeight);
+}
+
+}
+
+
+
+</script>
+</div>
+</BODY>
+</HTML>
+
+
