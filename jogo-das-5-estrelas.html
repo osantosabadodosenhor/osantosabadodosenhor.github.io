@@ -16,7 +16,7 @@ background:white;
 <div id="sl"><img id="slc" src="img/slc.png"></div><div style="position:fixed;top:0px;right:0px;width:60px;overflow:hidden;"><a href="index.html"><img src="img/slc.png" id="slc2"></a></div><br><div id="conteudo"><h2><font class="la">S</font><font style="color:blue;background:#00FF00;">S</font><font style="color:#00FF00;background:blue;">S</font> - O Santo Sábado do Senhor</h2><h1 class="tj">Jogo das 5 estrelas</h1>
 <h3 style="text-align:center;" id="pista"></h3>
 <br><br><center><table><tr><th id="e5"></th><th id="e4"></th><th id="e3"></th><th id="e2"></th><th id="e1"></th></tr></table></center><br><br><br><br>
-<p style="text-align:center;" id="resposta"></p>
+<p style="text-align:center;" id="resposta">Para que o jogo funcione corretamente, o JavaScript do seu navegador precisa estar ativado.</p>
 
 <div id=teclado><center><input type=button value="A" onclick=e("A") id=A></input><input type=button value="B" onclick=e("B") id=B></input><input type=button value="C" onclick=e("C") id=C></input><input type=button value="D" onclick=e("D") id=D></input><input type=button value="E" onclick=e("E") id=E></input><input type=button value="F" onclick=e("F") id=F></input><input type=button value="G" onclick=e("G") id=G></input><input type=button value="H" onclick=e("H") id=H></input><input type=button value="I" onclick=e("I") id=I></input><br><input type=button value="J" onclick=e("J") id=J></input><input type=button value="K" onclick=e("K") id=K></input><input type=button value="L" onclick=e("L") id=L></input><input type=button value="M" onclick=e("M") id=M></input><input type=button value="N" onclick=e("N") id=N></input><input type=button value="O" onclick=e("O") id=O></input><input type=button value="P" onclick=e("P") id=P></input><input type=button value="Q" onclick=e("Q") id=Q></input><input type=button value="R" onclick=e("R") id=R></input><br><input type=button value="S" onclick=e("S") id=S></input><input type=button value="T" onclick=e("T") id=T></input><input type=button value="U" onclick=e("U") id=U></input><input type=button value="V" onclick=e("V") id=V></input><input type=button value="W" onclick=e("W") id=W></input><input type=button value="X" onclick=e("X") id=X></input><input type=button value="Y" onclick=e("Y") id=Y></input><input type=button value="Z" onclick=e("Z") id=Z></input><input type=button value=" "style="opacity:0;text-align:center;" id=btestrela onclick=estrela()></input></center></div>
 <script type="text/javascript" src="js/s.js"></script>
@@ -25,9 +25,9 @@ background:white;
 var pistas=["profetas","reis","filhos de Israel","parábolas de Jesus","mulheres de fé"];
 var respostas=[["M","O","I","S","É","S"],["E","L","I","A","S"],["S","A","M","U","E","L"],["D","A","N","I","E","L"],["J","E","R","E","M","I","A","S"],["D","A","V","I"],["S","A","L","O","M","Ã","O"],["A","C","A","B","E"],["E","Z","E","Q","U","I","A","S"],["M","A","N","A","S","S","É","S"],["J","O","S","É"],["B","E","N","J","A","M","I","M"],["J","U","D","Á"],["R","Ú","B","E","N"],["L","E","V","I"],["S","E","M","E","A","D","O","R"],["J","O","I","O"," ","E"," ","T","R","I","G","O"],["F","I","G","U","E","I","R","A"],["R","I","C","O"," ","E"," ","L","Á","Z","A","R","O"],["G","R","Ã","O"," ","D","E"," ","M","O","S","T","A","R","D","A"],"SARA","MIRIÃ", "RAABE","ESTER","RUTE"];
 var texto=["Moisés recebeu das mãos do próprio Deus as duas tábuas de pedra com os dez mandamentos. Morreu com 120 anos, foi sepultado pelo próprio Senhor, e hoje está vivo no céu","Elias também está vivo no céu, mas no seu caso ele não morreu"];
-var senhas=[1234,2425,4890,9052,4790,2592,1458,0631,4479,2457,3169,2190,1368,9053,7899,4347,2578,2156,2146,3579,1476,3570,2688,1435,8733];
+/*var senhas=[1234,2425,4890,9052,4790,2592,1458,0631,4479,2457,3169,2190,1368,9053,7899,4347,2578,2156,2146,3579,1476,3570,2688,1435,8733];*/
 var i, tem, LetrasCertas, LetrasErradas, chances=5, bonus=0, l, j, f=1, a=0;
-var palavra=-1, pista=0,RevelouResposta, DigitouSenha=0;
+var palavra=-1, pista=0,RevelouResposta, ContinuouJogo=0;
 var resposta;
 var srcEstrela="img/estrela.png";
 var alfabeto="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -37,32 +37,29 @@ document.title="Jogo das 5 estrelas \u2b50\u2b50\u2b50\u2b50\u2b50";
 function inicio(){
 for(i=1;i<6;i++)
 document.getElementById("e"+i).innerHTML="";
-document.getElementById("resposta").innerHTML="<button onclick=ProximaPalavra() style='font-size:25px;'>Começar</button><br><button onclick=continuar() style='font-size:25px;'>Continuar jogo anterior</button><br><button onclick=instrucoes() style='font-size:25px;'>Instruções</button>";
+document.getElementById("resposta").innerHTML="<button onclick=NovoJogo() style='font-size:25px;'>Novo jogo</button><br><button onclick=continuar() style='font-size:25px;'>Continuar jogo anterior</button><br><button onclick=instrucoes() style='font-size:25px;'>Instruções</button>";
 MostraTeclado();
 window.scrollTo(0, document.body.scrollHeight);
 }
 inicio();
-function continuar(){
-ApagaTeclado();
-document.getElementById("resposta").innerHTML="senha:<input type = number style='max-width:100px;width:100px;' id=s autofocus></input><button onclick=senha() style='font-size:25px;'>Ok</button><br><br><button onclick=inicio() style='font-size:25px;'>Voltar</button>";
+
+function NovoJogo(){
+localStorage.setItem("jogo-das-5-estrelas",-1);
+ProximaPalavra();
 }
 
-function senha(){
-for(i=0;i<respostas.length;i++)
-if(parseInt(document.getElementById("s").value)==senhas[i]){
-DigitouSenha=1;
-palavra=i;pista=parseInt(palavra/5);
-MostraTeclado();
+function continuar(){
+if(localStorage.getItem("jogo-das-5-estrelas")!=null)palavra=parseInt(localStorage.getItem("jogo-das-5-estrelas"));
+pista=parseInt(palavra/5);
+ContinuouJogo=1;
 ProximaPalavra();
-break;
 }
-if(i==respostas.length)alert("Senha incorreta");
-}
+
 function instrucoes(){
 ApagaTeclado();
 for(i=1;i<6;i++)
 document.getElementById("e"+i).innerHTML="<img src='"+srcEstrela+"' width=40px>";
-document.getElementById("resposta").innerHTML="Esse é um jogo parecido com o conhecido jogo da forca, porém não tem fundo de violência. O objetivo é descobrir a palavra. Para ajudar, uma pista é dada. O tema é a Bíblia. Você tem 5 estrelas. Quando você errar uma letra, você perderá uma estrela. Se perder todas as estrelas, perde o jogo. Porém, se você conseguir descobrir uma palavra sem errar nenhuma letra, você ganhará uma estrela de bônus, que aparecerá no teclado. Você poderá usá-la quando tiver menos do que 5 estrelas. E o bônus acumula: você poderá ter várias estrelas de bônus. Enquanto o botão com uma estrela estiver no teclado significa que você tem bônus.<br><br>A letra que você clicar e ficar com o fundo vermelho não faz parte da palavra. A que ficar com o fundo verde faz parte. A cada palavra que você descobre é mostrada uma senha, que você pode digitar no início do jogo para continuar de onde parou. A cada 5 palavras, a pista é mudada.<br><br>Divirta-se!<br><button onclick=inicio() style='font-size:25px;'>Voltar</button>"
+document.getElementById("resposta").innerHTML="Esse é um jogo parecido com o conhecido jogo da forca, porém não tem fundo de violência. O objetivo é descobrir a palavra. Para ajudar, uma pista é dada. O tema é a Bíblia. Você tem 5 estrelas. Quando você errar uma letra, você perderá uma estrela. Se perder todas as estrelas, perde o jogo. Porém, se você conseguir descobrir uma palavra sem errar nenhuma letra, você ganhará uma estrela de bônus, que aparecerá no teclado. Você poderá usá-la quando tiver menos do que 5 estrelas. E o bônus acumula: você poderá ter várias estrelas de bônus. Enquanto o botão com uma estrela estiver no teclado significa que você tem bônus.<br><br>A letra que você clicar e ficar com o fundo vermelho não faz parte da palavra. A que ficar com o fundo verde faz parte. A cada 5 palavras, a pista é mudada. Se você já tiver jogado antes, clique em Continuar jogo anterior para continuar de onde parou.<br><br>Divirta-se!<br><button onclick=inicio() style='font-size:25px;'>Voltar</button>"
 }
 
 function LimpaTeclado(){//função que remove a cor de fundo do teclado
@@ -71,10 +68,12 @@ document.getElementById(alfabeto[i]).style.backgroundColor="white";
 
 }
 function ApagaTeclado(){
-document.getElementById("teclado").style.opacity=0;
+for(i=0;i<alfabeto.length;i++)
+document.getElementById(alfabeto[i]).style.opacity=0;
 }
 function MostraTeclado(){
-document.getElementById("teclado").style.opacity=1;
+for(i=0;i<alfabeto.length;i++)
+document.getElementById(alfabeto[i]).style.opacity=1;
 }
 function APistaMudou(){//chama a atenção para a pista quando ela mudar
 
@@ -93,7 +92,7 @@ document.body.innerHTML="<center><img src=img/parabens.png style='width:100%;max
 }
 if(palavra%5==0&&palavra!=0){
 pista++;
-if(DigitouSenha==0){j=setInterval(APistaMudou,10);a=0;}
+if(ContinuouJogo==0){j=setInterval(APistaMudou,10);a=0;}
 
 }
 document.getElementById("pista").innerHTML="A pista é "+pistas[pista];
@@ -112,7 +111,7 @@ document.getElementById("resposta").innerHTML+="<br>";LetrasCertas+=" ";
 for(i=1;i<6;i++)
 document.getElementById("e"+i).innerHTML="<img src='"+srcEstrela+"' width=40>";
 LimpaTeclado();
-DigitouSenha=0;
+ContinuouJogo=0;
 window.scrollTo(0, document.body.scrollHeight);
 }
 function estrela(){
@@ -159,13 +158,14 @@ tem=1;
 LetrasCertas+=c;
 if(LetrasCertas.length==resposta.length){//se descobriu todas as 
 if(LetrasErradas.length==0){             //letras da resposta
-alert("Acertou! Você não errou nenhuma letra! Ganhou uma estrela. Use-a quando tiver menos de 5. Senha: "+senhas[palavra]);
+alert("Acertou! Você não errou nenhuma letra! Ganhou uma estrela. Use-a quando tiver menos de 5.");
 document.getElementById("btestrela").style.opacity=1;document.getElementById("btestrela").value="\u2b50";bonus++;
 }
 else
-alert("Acertou! Senha: "+senhas[palavra]); 
-document.getElementById("resposta").innerHTML+="<br><button onclick=ProximaPalavra() style='font-size:25px;'>Próxima palavra</button>";
+alert("Acertou!");
+localStorage.setItem("jogo-das-5-estrelas",palavra);
 RevelouResposta=1;
+document.getElementById("resposta").innerHTML+="<br><button onclick=ProximaPalavra() style='font-size:25px;'>Próxima palavra</button>";
 
 
 }
@@ -180,8 +180,10 @@ chances--;
 if(chances==0){//perdeu
 
 for(i=0;i<resposta.length;i++){
+if(resposta[i]!=" "){
 document.getElementById(i).value=resposta[i];
 document.getElementById(i).style.backgroundColor="red";
+}
 }
 document.getElementById("resposta").innerHTML+="<br><button onclick=ProximaPalavra() style='font-size:25px;'>Próxima palavra</button>";
 RevelouResposta=1;
@@ -189,4 +191,7 @@ RevelouResposta=1;
 }
 }
 }
-</script><iframe src="https://osantosabadodosenhor3.blogspot.com/2023/12/jogo-das-5-estrelas.html?m=1" width="0" height="0"></iframe></div></BODY></HTML>
+</script><iframe src="https://osantosabadodosenhor3.blogspot.com/2023/12/jogo-das-5-estrelas.html?m=1" width="0" height="0"></iframe>
+</div>
+</BODY>
+</HTML>

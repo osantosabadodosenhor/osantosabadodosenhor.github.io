@@ -1,33 +1,30 @@
 ﻿<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Enima Bíblico</title><link rel="icon" type="image/png" href="img/f.png"><meta http-equiv="content-language" content="pt-br"><meta name="description" content="Jogo bíblico no qual, para se descobrir a resposta, são dadas três pistas, uma imagem e duas informações."><link rel="stylesheet" href="css/e.css"><style>#p2{width:100%;max-width:300px;}p{text-align:center;}</style></HEAD><BODY><div id="sl"><img id="slc" src="img/slc.png"></div><div id="c"><a href="index.html"><img src="img/slc.png" id="slc2"></a></div><br><div id="conteudo"><h2><font class="la">S</font><font style="color:blue;background:#00FF00;">S</font><font style="color:#00FF00;background:blue;">S</font> - O Santo Sábado do Senhor</h2><h1 class="tj">Enima Bíblico</h1>
-<center><div id="jogo"></div></center>
+<center><div id="jogo"><p>Para que o jogo funcione corretamente, o JavaScript do seu navegador precisa estar ativado.</p></div></center>
 <script type="text/javascript" src="js/s.js"></script>
 <script>
 var pistas1=["Substantivo feminino","Animal","Nome masculino","Osso","Aquele que existe"];
 var pistas2=["arco.webp","corda.jpg","jaca.jpg","mulher.png","pente.jpg"];
 var pistas3=["Noé","Páscoa","Israel","Origem","Astuto"];
 var respostas=["arca","cordeiro","jaco","costela","serpente"];
-var senhas=[11,12,13,14,15];
-var nivel=0, i,DigitouSenha=0;
+var nivel=0, i;
 
 inicio();
 function inicio(){
-document.getElementById("jogo").innerHTML="<button onclick=ProximoNivel() style='font-size:25px;'>Começar</button><br><button onclick=continuar() style='font-size:25px;'>Continuar jogo anterior</button><br><button onclick=instrucoes() style='font-size:25px;'>Instruções</button>";
-}
-function continuar(){
-document.getElementById("jogo").innerHTML="<p>senha:<input type = number style='font-size:25px;width:100px;' id=s autofocus></input><button onclick=senha() style='font-size:25px;'>Ok</button><br><br><button onclick=inicio() style='font-size:25px;'>Voltar</button></p>";
+document.getElementById("jogo").innerHTML="<button onclick=NovoJogo() style='font-size:25px;'>Novo jogo</button><br><button onclick=continuar() style='font-size:25px;'>Continuar jogo anterior</button><br><button onclick=instrucoes() style='font-size:25px;'>Instruções</button>";
 }
 
-function senha(){
-for(i=0;i<senhas.length;i++)
-if(parseInt(document.getElementById("s").value)==senhas[i]){
-DigitouSenha=1;
-nivel=i;
+function NovoJogo(){
+localStorage.setItem("enigma-biblico",0);
 ProximoNivel();
-break;
-}
-if(i==senhas.length)alert("Senha incorreta");
 }
 
+function continuar(){
+
+if(localStorage.getItem("enigma-biblico")!=null)nivel=parseInt(localStorage.getItem("enigma-biblico"));
+else
+nivel=0;
+ProximoNivel();
+}
 
 function ProximoNivel(){
 document.getElementById("jogo").innerHTML="<p>"+pistas1[nivel]+"</p><p><img src='img/"+pistas2[nivel]+"' id='p2'></p><p>"+pistas3[nivel]+"</p><p><input type=text id='resposta' style='font-size:25px;width:150px;'></input><button onclick=respondeu() style='font-size:25px;'>Ok</button></p><p id='paragrafo'></p>";
@@ -35,7 +32,7 @@ window.scrollTo(0, document.body.scrollHeight);
 }
 
 function instrucoes(){
-document.getElementById("jogo").innerHTML="<p>Que a paz esteja com você!</p><p>Inspirado no jogo Enigma do site Só Matemática, este é um jogo simples, porém divertido e útil para testar seus conhecimentos sobre a Bíblia, e motivar você a aprender mais.</p><p>Para descobrir a resposta, são dadas três pistas, uma imagem e duas informações. O tema é a Bíblia. Digite a resposta na caixa de texto e clique em Ok. Você será avisado se acertou ou não. Caso tenha acertado, o próximo nível será desbloqueado, e será mostrada uma senha, para que você, da próxima vez que jogar, não precise começar desde o início, mas sim de onde parou. Se você já tiver jogado alguma vez, clique em Continuar jogo anterior e digite a última senha que você viu. Divirta-se!</p><p>Obs: Para que o jogo funcione corretamente, o JavaScript do seu navegador precisa estar ativado.</p><p>Que Deus abençoe você!</p><button onclick=inicio() style='font-size:25px;'>Voltar</button>"
+document.getElementById("jogo").innerHTML="<p>Que a paz esteja com você!</p><p>Inspirado no jogo Enigma do site Só Matemática, este é um jogo simples, porém divertido e útil para testar seus conhecimentos sobre a Bíblia, e motivar você a aprender mais.</p><p>Para descobrir a resposta, são dadas três pistas, uma imagem e duas informações. O tema é a Bíblia. Digite a resposta na caixa de texto e clique em Ok. Você será avisado se acertou ou não. Caso tenha acertado, o próximo nível será desbloqueado. Se você já tiver jogado alguma vez, clique em Continuar jogo anterior para continuar de onde parou. Divirta-se!</p><p>Que Deus abençoe você!</p><button onclick=inicio() style='font-size:25px;'>Voltar</button>"
 }
 
 function ce(p){//converte caracteres especiais em caracteres comuns
@@ -67,7 +64,8 @@ alert("Parabéns! Você concluiu todos os níveis!");
 }
 else{
 nivel++;
-alert("Acertou! Parabéns! Clique em Próximo nível para passar para o nível seguinte. Senha: "+senhas[nivel]);
+localStorage.setItem("enigma-biblico",nivel);
+alert("Acertou! Parabéns! Clique em Próximo nível para passar para o nível seguinte.");
 
 document.getElementById("paragrafo").innerHTML="<button onclick=ProximoNivel() style='font-size:25px;'>Próximo nível</button>";
 window.scrollTo(0, document.body.scrollHeight);
@@ -78,4 +76,7 @@ alert("Não foi dessa vez. Tente novamente. Talvez você tenha descobrido a resp
 
 }
 
-</script><iframe src="https://osantosabadodosenhor3.blogspot.com/2023/12/enigma-biblico.html?m=1" width="0" height="0"></iframe></div></BODY></HTML>
+</script><iframe src="https://osantosabadodosenhor3.blogspot.com/2023/12/enigma-biblico.html?m=1" width="0" height="0"></iframe>
+</div>
+</BODY>
+</HTML>
