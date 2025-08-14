@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogspot Links</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        li {
+            margin: 5px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        li a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #007bff;
+            transition: background-color 0.2s;
+        }
+        li a:hover {
+            background-color: #e2e6ea;
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Links Blogspot</h1>
+    <ul>
+        </ul>
+
+    <script>
+        const ul = document.querySelector('ul');
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+        for (let i = 0; i < alphabet.length; i++) {
+            for (let j = 0; j < alphabet.length; j++) {
+                const combination = alphabet[i] + alphabet[j];
+                const href = `https://${combination}.blogspot.com`;
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = href;
+                a.textContent = href;
+                a.target = "_blank"; // Open in new tab
+                li.appendChild(a);
+                ul.appendChild(li);
+            }
+        }
+    </script>
+</body>testar o ao, bp
+</html>
